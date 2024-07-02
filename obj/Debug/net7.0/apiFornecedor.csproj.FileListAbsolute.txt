@@ -243,3 +243,12 @@ E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\runtimes\unix\lib\net6.0\Syst
 E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Azure.Core.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Azure.Identity.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Mono.TextTemplating.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\System.CodeDom.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\System.Memory.Data.dll
