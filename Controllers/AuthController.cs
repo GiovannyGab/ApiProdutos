@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace apiFornecedor.Controllers
 {
@@ -29,7 +32,7 @@ namespace apiFornecedor.Controllers
         [HttpPost("registrar")]
         public async Task<ActionResult> Registrar(UserRegisterModel registerUser)
         {
-
+            if (!ModelState.IsValid) return ValidationProblem(ModelState); 
             var user = new IdentityUser
             {
                 UserName = registerUser.Email,
@@ -42,7 +45,7 @@ namespace apiFornecedor.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return Ok(await GerarJwt());
+                return Ok(GerarJwt());
             }
             return Problem("Falha ao registrar usuario");
 
@@ -50,7 +53,31 @@ namespace apiFornecedor.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login(UserLoginModel loginUser)
         {
-            return Ok();
+            var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Senha, false, true);
+            if (result.Succeeded)
+            {
+                return Ok(GerarJwt());
+            }
+            return Problem("Usuario ou senha incorreto");
+        }
+        private string GerarJwt()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_jwtSettings.Segredo);
+
+            var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
+            {
+                Issuer = _jwtSettings.Emissor,
+                Audience = _jwtSettings.Audiencia,
+                Expires = DateTime.UtcNow.AddHours(_jwtSettings.ExpiracaoEmHoras),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+
+            });
+
+            var encodedToken = tokenHandler.WriteToken(token);
+            return encodedToken;
+
         }
     }
+
 }

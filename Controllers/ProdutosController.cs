@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace apiFornecedor.Controllers
 {
+    [Authorize]
     [ApiController]
-
     [Route("api/produtos")]
     public class ProdutosController : ControllerBase
     {
@@ -78,7 +79,8 @@ namespace apiFornecedor.Controllers
                 {
                     return NotFound();
                 }
-                else{
+                else
+                {
                     throw;
                 }
             }
@@ -91,9 +93,9 @@ namespace apiFornecedor.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Produto>> DeletarProduto(int id)
         {
-            if(_context.Produtos == null) { return NotFound(); }
+            if (_context.Produtos == null) { return NotFound(); }
             var produto = await _context.Produtos.FindAsync(id);
-            if(produto == null) return NotFound();
+            if (produto == null) return NotFound();
             _context.Produtos.Remove(produto);
 
             await _context.SaveChangesAsync();
