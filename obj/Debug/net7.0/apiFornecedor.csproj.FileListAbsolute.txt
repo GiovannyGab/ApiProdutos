@@ -252,3 +252,4 @@ E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Microsoft.SqlServer.Server.dl
 E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Mono.TextTemplating.dll
 E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\System.CodeDom.dll
 E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\System.Memory.Data.dll
+E:\.netWorkspace\webApiWithEfCore\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

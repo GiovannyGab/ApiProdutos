@@ -23,7 +23,7 @@ namespace apiFornecedor.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
         {
-            if(_context.Produtos == null)
+            if (_context.Produtos == null)
             {
                 return NotFound();
             }
@@ -38,7 +38,7 @@ namespace apiFornecedor.Controllers
 
             var produto = await _context.Produtos.FindAsync(id);
             if (produto == null) return NotFound();
-          
+
             return produto;
         }
 
@@ -47,7 +47,7 @@ namespace apiFornecedor.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Produto>> InserirProduto(Produto produto)
         {
-            if(_context.Produtos == null)
+            if (_context.Produtos == null)
             {
                 return Problem("erro a o criar o produto, contacte o suporte");
             }
@@ -62,11 +62,26 @@ namespace apiFornecedor.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Produto>> AtualizarProduto(int id, Produto produto)
         {
-            if(id != produto.Id) return BadRequest();
-            _context.Produtos.Update(produto);
+            if (id != produto.Id) return BadRequest();
+            _context.Entry(produto).State = EntityState.Modified;
 
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProdutoExists(id))
+                {
+                    return NotFound();
+                }
+                else{
+                    throw;
+                }
+            }
 
             return NoContent();
         }
@@ -76,8 +91,9 @@ namespace apiFornecedor.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Produto>> DeletarProduto(int id)
         {
+            if(_context.Produtos == null) { return NotFound(); }
             var produto = await _context.Produtos.FindAsync(id);
-
+            if(produto == null) return NotFound();
             _context.Produtos.Remove(produto);
 
             await _context.SaveChangesAsync();
@@ -85,6 +101,10 @@ namespace apiFornecedor.Controllers
             return NoContent();
         }
 
+        private bool ProdutoExists(int id)
+        {
+            return (_context.Produtos.Any(p => p.Id == id));
+        }
 
     }
 }
