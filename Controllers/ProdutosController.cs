@@ -88,6 +88,7 @@ namespace apiFornecedor.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles ="Usuario")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
