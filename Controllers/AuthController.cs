@@ -47,8 +47,8 @@ namespace apiFornecedor.Controllers
 
             if (result.Succeeded)
             {
-                // Adicione o usuário à role desejada após criar o usuário com sucesso
-                var roleResult = await _userManager.AddToRoleAsync(user, "Admin");  // Substitua "Admin" pelo nome exato da role
+                
+                var roleResult = await _userManager.AddToRoleAsync(user, "Usuario"); 
                 if (roleResult.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
@@ -56,7 +56,7 @@ namespace apiFornecedor.Controllers
                 }
                 else
                 {
-                    // Caso a adição à role falhe, você pode querer tratar esse erro adequadamente
+                  
                     return Problem("Falha ao adicionar o usuário à role");
                 }
                 await _signInManager.SignInAsync(user, false);
